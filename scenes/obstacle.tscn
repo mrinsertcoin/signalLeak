@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_obstacle_script"]
+
+[node name="Obstacle" type="StaticBody2D"]
+script = ExtResource("1_obstacle_script")
+collision_layer = 2
+collision_mask = 0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.08, 0.12, 0.22, 1)
+polygon = PackedVector2Array(-50, -35, 45, -40, 58, 8, 24, 44, -36, 38, -61, -3)
+
+[node name="DetailLines" type="Node2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-50, -35, 45, -40, 58, 8, 24, 44, -36, 38, -61, -3)

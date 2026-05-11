@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/health_pickup.gd" id="1_health_pickup_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_health_pickup"]
+radius = 17.0
+
+[node name="HealthPickup" type="Area2D"]
+script = ExtResource("1_health_pickup_script")
+collision_layer = 16
+collision_mask = 1
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.08, 1, 0.72, 1)
+polygon = PackedVector2Array(0, -20, 8, -8, 20, -8, 20, 8, 8, 8, 8, 20, -8, 20, -8, 8, -20, 8, -20, -8, -8, -8)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -10.0
+offset_right = 18.0
+offset_bottom = 10.0
+text = "+22"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_health_pickup")

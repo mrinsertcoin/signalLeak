@@ -1,0 +1,329 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/signal_pickup.tscn" id="3_pickup"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="4_game_manager"]
+[ext_resource type="Script" path="res://scripts/signal_director.gd" id="5_signal_director"]
+[ext_resource type="PackedScene" path="res://scenes/bullet.tscn" id="6_bullet"]
+[ext_resource type="PackedScene" path="res://scenes/obstacle.tscn" id="7_obstacle"]
+[ext_resource type="Script" path="res://scripts/world_generator.gd" id="8_world_generator"]
+[ext_resource type="PackedScene" path="res://scenes/weapon_upgrade_pickup.tscn" id="9_upgrade"]
+[ext_resource type="PackedScene" path="res://scenes/comet.tscn" id="10_comet"]
+[ext_resource type="PackedScene" path="res://scenes/bullet_pickup.tscn" id="11_bullet_pickup"]
+[ext_resource type="PackedScene" path="res://scenes/health_pickup.tscn" id="12_health_pickup"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_bullet.tscn" id="13_enemy_bullet"]
+[ext_resource type="Script" path="res://scripts/signal_background.gd" id="14_signal_background"]
+[ext_resource type="Script" path="res://scripts/music_controller.gd" id="15_music"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("4_game_manager")
+enemy_scene = ExtResource("2_enemy")
+signal_pickup_scene = ExtResource("3_pickup")
+bullet_scene = ExtResource("6_bullet")
+weapon_upgrade_scene = ExtResource("9_upgrade")
+bullet_pickup_scene = ExtResource("11_bullet_pickup")
+health_pickup_scene = ExtResource("12_health_pickup")
+comet_scene = ExtResource("10_comet")
+enemy_bullet_scene = ExtResource("13_enemy_bullet")
+kills_to_win = 30
+
+[node name="Background" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = -100000.0
+offset_top = -100000.0
+offset_right = 100000.0
+offset_bottom = 100000.0
+color = Color(0.025, 0.025, 0.045, 1)
+
+
+[node name="SignalBackground" type="Node2D" parent="."]
+z_index = -80
+script = ExtResource("14_signal_background")
+player_path = NodePath("../Player")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("15_music")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(640, 360)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="Comets" type="Node2D" parent="."]
+
+[node name="EnemyBullets" type="Node2D" parent="."]
+
+[node name="WorldGenerator" type="Node2D" parent="."]
+script = ExtResource("8_world_generator")
+obstacle_scene = ExtResource("7_obstacle")
+player_path = NodePath("../Player")
+
+[node name="SignalDirector" type="Node" parent="."]
+script = ExtResource("5_signal_director")
+player_path = NodePath("../Player")
+manager_path = NodePath("..")
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 1.2
+autostart = true
+
+[node name="PickupSpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="WeaponUpgradeTimer" type="Timer" parent="."]
+wait_time = 7.0
+autostart = true
+
+[node name="BulletPickupTimer" type="Timer" parent="."]
+wait_time = 4.2
+autostart = true
+
+[node name="HealthPickupTimer" type="Timer" parent="."]
+wait_time = 7.5
+autostart = true
+
+[node name="CometTimer" type="Timer" parent="."]
+wait_time = 8.5
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+
+[node name="ModeLabel" type="Label" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 520.0
+offset_bottom = 38.0
+text = "Choose Mode"
+
+[node name="HealthBar" type="Control" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 34.0
+offset_right = 282.0
+offset_bottom = 50.0
+
+[node name="Back" type="ColorRect" parent="CanvasLayer/HealthBar"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 264.0
+offset_bottom = 16.0
+color = Color(0.12, 0.02, 0.06, 0.88)
+
+[node name="Fill" type="ColorRect" parent="CanvasLayer/HealthBar"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 262.0
+offset_bottom = 14.0
+color = Color(0.05, 0.95, 0.65, 1)
+
+[node name="HealthText" type="Label" parent="CanvasLayer/HealthBar"]
+offset_left = 88.0
+offset_top = -2.0
+offset_right = 220.0
+offset_bottom = 20.0
+text = "100 / 100"
+
+
+[node name="UltraBar" type="Control" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 56.0
+offset_right = 282.0
+offset_bottom = 72.0
+
+[node name="Back" type="ColorRect" parent="CanvasLayer/UltraBar"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 264.0
+offset_bottom = 16.0
+color = Color(0.02, 0.06, 0.13, 0.88)
+
+[node name="Fill" type="ColorRect" parent="CanvasLayer/UltraBar"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 262.0
+offset_bottom = 14.0
+color = Color(0.25, 0.85, 1, 1)
+
+[node name="UltraText" type="Label" parent="CanvasLayer/UltraBar"]
+offset_left = 55.0
+offset_top = -2.0
+offset_right = 250.0
+offset_bottom = 20.0
+text = "ULTRA 0/170  [Q cone]"
+
+[node name="LevelText" type="Label" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 78.0
+offset_right = 920.0
+offset_bottom = 108.0
+text = "Level: 1   XP: 0/8   Bullet DMG: 1   Enemy HP +0"
+
+[node name="HUD" type="Label" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 106.0
+offset_right = 920.0
+offset_bottom = 136.0
+text = "Score: 0   Kills: 0/30   Active Signals: 0"
+
+[node name="Weapons" type="Label" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 134.0
+offset_right = 920.0
+offset_bottom = 164.0
+text = "Weapons: Basic"
+
+[node name="Controls" type="Label" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 162.0
+offset_right = 1180.0
+offset_bottom = 192.0
+text = "WASD/Arrows move | hold Left Click shoots | Right Click autofire | Q 90° cone shockwave | pickups despawn | ESC pause"
+
+[node name="FakePing" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 930.0
+offset_top = 16.0
+offset_right = 1260.0
+offset_bottom = 52.0
+text = "MINIMAP: HOSTILE SIGNAL BEHIND YOU"
+
+
+
+[node name="Announcement" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 390.0
+offset_top = 90.0
+offset_right = 890.0
+offset_bottom = 155.0
+text = "SIGNAL LOSS DETECTED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ModePanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Backdrop" type="ColorRect" parent="CanvasLayer/ModePanel"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.005, 0.01, 0.025, 0.68)
+
+[node name="Title" type="Label" parent="CanvasLayer/ModePanel"]
+offset_left = 350.0
+offset_top = 145.0
+offset_right = 930.0
+offset_bottom = 210.0
+text = "SIGNAL LEAK"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CanvasLayer/ModePanel"]
+offset_left = 340.0
+offset_top = 205.0
+offset_right = 940.0
+offset_bottom = 230.0
+text = "DRIFT THROUGH A FAILING SIGNAL"
+horizontal_alignment = 1
+
+[node name="ModeText" type="Label" parent="CanvasLayer/ModePanel"]
+offset_left = 180.0
+offset_top = 230.0
+offset_right = 1100.0
+offset_bottom = 625.0
+text = "A corrupted arcade survival game\n\n1  ENDLESS\nEscalating enemy pressure, Signal Loss, Doomsday waves.\n\n2  CAMPAIGN\nThree short levels with increasing enemy variety.\n\n3  DEBUG ENDLESS\nAll enemy types spawn with equal probability for testing.\n\nControls: WASD/Arrows move | Mouse aim | Hold Left Click shoot | Right Click autofire | Q cone shockwave | ESC pause\n\nPickups despawn after 4 seconds. Kill enemies to level up and charge ultra."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PausePanel" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Backdrop" type="ColorRect" parent="CanvasLayer/PausePanel"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.62)
+
+[node name="PauseText" type="Label" parent="CanvasLayer/PausePanel"]
+offset_left = 320.0
+offset_top = 185.0
+offset_right = 960.0
+offset_bottom = 545.0
+text = "PAUSED\n\nWASD / Arrow Keys: Move\nMouse: Aim\nHold Left Click: Shoot\nRight Click: Toggle Autofire [OFF]\nQ: 90° Ultra Shockwave when charged\nPickups despawn after 4 seconds\nESC: Resume\nR: Restart after death/victory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverPanel" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="CanvasLayer/GameOverPanel"]
+offset_left = 520.0
+offset_top = 280.0
+offset_right = 780.0
+offset_bottom = 330.0
+text = "SIGNAL LOST"
+
+[node name="FinalScore" type="Label" parent="CanvasLayer/GameOverPanel"]
+offset_left = 330.0
+offset_top = 320.0
+offset_right = 950.0
+offset_bottom = 610.0
+text = "Final Score: 0"
+horizontal_alignment = 1
+
+[node name="RestartHint" type="Label" parent="CanvasLayer/GameOverPanel"]
+offset_left = 330.0
+offset_top = 620.0
+offset_right = 950.0
+offset_bottom = 650.0
+text = "Press R to restart"
+horizontal_alignment = 1
+
+[node name="VictoryPanel" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="CanvasLayer/VictoryPanel"]
+offset_left = 500.0
+offset_top = 280.0
+offset_right = 820.0
+offset_bottom = 330.0
+text = "SIGNAL STABILIZED"
+
+[node name="FinalScore" type="Label" parent="CanvasLayer/VictoryPanel"]
+offset_left = 330.0
+offset_top = 320.0
+offset_right = 950.0
+offset_bottom = 610.0
+text = "Final Score: 0"
+horizontal_alignment = 1
+
+[node name="RestartHint" type="Label" parent="CanvasLayer/VictoryPanel"]
+offset_left = 330.0
+offset_top = 620.0
+offset_right = 950.0
+offset_bottom = 650.0
+text = "Press R to restart"
+horizontal_alignment = 1

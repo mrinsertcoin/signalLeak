@@ -1,0 +1,20 @@
+# Godot generated/imported files
+.godot/
+.import/
+*.import
+
+# Exported builds
+builds/*
+!builds/.gitkeep
+*.exe
+*.pck
+*.zip
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Runtime save/debug files
+*.log
