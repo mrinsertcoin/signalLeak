@@ -213,15 +213,6 @@ git push origin v0.16.0
 - [Release Notes](docs/release_notes.md)
 - [Devlog](docs/devlog.md)
 
-## Suggested GitHub Topics
-
-```text
-godot godot4 gdscript game-development arcade-game pixel-art procedural-audio portfolio-project
-```
-
-## Portfolio Description
-
-> Built an export-ready Godot 4 arcade game featuring modular gameplay systems, enemy AI variants, stackable weapon upgrades, procedural difficulty scaling, local JSON persistence, real-time audio generation, automated Windows release workflow, and clean project documentation.
 
 ## License
 
